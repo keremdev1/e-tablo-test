@@ -1,5 +1,6 @@
 import { Database } from "croxydb"
 import { v4 as uuidv4 } from "uuid"
+import "croxydb"; // ✅ Sadece dosya temelli kullanım
 
 // Veritabanı bağlantıları
 const usersDb = new Database("./data/users.json")
