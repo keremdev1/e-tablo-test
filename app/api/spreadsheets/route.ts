@@ -39,6 +39,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: "E-tablo adı gereklidir" }, { status: 400 })
     }
 
+    // Token kontrolü
     const authHeader = request.headers.get("authorization")
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return NextResponse.json({ success: false, error: "Yetkilendirme gereklidir" }, { status: 401 })
@@ -51,13 +52,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: "Geçersiz token" }, { status: 401 })
     }
 
-    // ✅ Kullanıcıyı Spreadsheet'e ekle
-    const spreadsheet = spreadsheetOperations.create(name, [
-      {
-        username: user.username,
-        password: user.password,
-      },
-    ])
+    // Yeni e-tablo oluştur
+    const spreadsheet = spreadsheetOperations.create(name, user.id)
 
     return NextResponse.json({
       success: true,
